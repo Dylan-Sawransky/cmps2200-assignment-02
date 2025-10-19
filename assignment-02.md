@@ -1,6 +1,8 @@
+
+[assignment-02.md](https://github.com/user-attachments/files/22993090/assignment-02.md)
 # CMPS 2200 Assignment 2
 
-**Name:**_________________________
+**Name:**_____Dylan Sawransky__________________
 
 In this assignment we'll work on applying the methods we've learned to analyze recurrences, and also see their behavior
 in practice. As with previous
@@ -16,7 +18,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 
 * $W(n)=2W(n/3)+1$
 .  
-.  
+.  Θ(n^log₃2)
 . 
 .  
 . 
@@ -25,7 +27,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
  
 * $W(n)=5W(n/4)+n$
 .  
-.
+.Θ(n^log₄5)
 .  
 . 
 .  
@@ -36,7 +38,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 
 * $W(n)=7W(n/7)+n$
 .  
-. 
+. Θ(n log n)
 .  
 .  
 . 
@@ -45,7 +47,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 
 * $W(n)=9W(n/3)+n^2$
 .  
-.
+.Θ(n² log n)
 . 
 .  
 . 
@@ -59,7 +61,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 .
 .  
 .  
-.  
+.  Θ(n³ log n)
 .  
 . 
 .  
@@ -69,7 +71,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 * $W(n)=49W(n/25)+n^{3/2}\log n$
 .  
 .  
-. 
+. Θ(n^(3/2) log n)
 .  
 . 
 .  
@@ -79,7 +81,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 * $W(n)=W(n-1)+2$
 .  
 .  
-. 
+. Θ(n)
 .  
 . 
 .  
@@ -90,7 +92,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 .  
 .  
 .  
-.  
+.  Θ(n^(c+1))
 .  
 . 
 .  
@@ -99,7 +101,7 @@ Derive asymptotic upper bounds of work for each recurrence below.
 * $W(n)=W(\sqrt{n})+1$
 .  
 .  
-.  
+.  Θ(log log n)
 .  
 .  
 . 
@@ -127,10 +129,10 @@ Suppose that for a given task you are choosing between the following three algor
     Which algorithm would you choose?
 
 
-.  
-.  
-.  
-.  
+.  A: Θ(n^log₂5)
+.  B:Θ(2^n)
+.  C:Θ(n² log n)
+.  Algorithm C has the best asymptotic runtime Θ(n² log n).
 . 
 . 
 
@@ -162,8 +164,9 @@ Below, we'll solve this problem three different ways, using iterate, scan, and d
 
 **enter answer here**
 
-.  
-. 
+. Span: S(n) = O(n)
+. Big Oh: Θ(n) for both
+Work: W(n) = O(n)
 
 
 
@@ -178,9 +181,9 @@ Below, we'll solve this problem three different ways, using iterate, scan, and d
 
 **enter answer here**
 
-.  
-.  
-
+.  Work: W(n) = O(n)
+.  Span: S(n) = O(log n)
+Big Oh: Work = Θ(n) Span = Θ(log n)
 
 
 
@@ -199,9 +202,9 @@ Below, we'll solve this problem three different ways, using iterate, scan, and d
 
 **enter answer here**
 
-.  
-. 
-
+. Work: W(n) = 2W(n/2) + O(1) = O(n)
+. Span: S(n) = S(n/2) + O(1) = O(log n)
+Big Oh: Work = Θ(n), Span = Θ(log n)
 
  
  
