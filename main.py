@@ -22,9 +22,8 @@ def parens_match_iterative(mylist):
     >>>parens_match_iterative(['('])
     False
     """
-    ### TODO
-    return iterate(parens_update, 0, mylist) == 0
-    ###
+    final_count = iterate(parens_update, 0, mylist)
+    return final_count == 0
 
 
 def parens_update(current_output, next_input):
@@ -39,22 +38,24 @@ def parens_update(current_output, next_input):
     Returns:
       the updated value of `current_output`
     """
-    ###TODO
-    if current_output == -math.inf:  # in an invalid state; carry it forward
+    if current_output < 0:  
         return current_output
-    if next_input == '(':            # new open parens 
+    if next_input == '(':
         return current_output + 1
-    elif next_input == ')':          # new close parens
-        if current_output <= 0:      # close before an open -> invalid
-            return -math.inf
-        else:                        # valid
-            return current_output - 1
-    else:                            # ignore non-parens input
+    elif next_input == ')':
+        return current_output - 1
+    else:
         return current_output
-    ###
 
 
-
+def iterate(f, x, a):
+    """
+    Apply function f iteratively to sequence a starting with initial value x.
+    """
+    result = x
+    for item in a:
+        result = f(result, item)
+    return result
 
 
 #### Scan solution
@@ -76,10 +77,20 @@ def parens_match_scan(mylist):
     False
     
     """
-    ###TODO
-    history, last = scan(plus, 0, list(map(paren_map, mylist)))
-    return last == 0 and reduce(min_f, 0, history) >= 0
-    ###
+    if not mylist:
+        return True
+        
+    # Map parentheses to values
+    mapped = list(map(paren_map, mylist))
+    
+    # Get prefix sums using scan
+    prefix_sums, total = scan(plus, 0, mapped)
+    
+    # Check if total is 0 and all prefix sums are non-negative
+    all_non_negative = reduce(min_f, float('inf'), prefix_sums) >= 0
+    
+    return total == 0 and all_non_negative
+
 
 def scan(f, id_, a):
     """
@@ -123,6 +134,22 @@ def min_f(x,y):
         return x
     return y
 
+def plus(a, b):
+    """
+    Returns the sum of a and b.
+    """
+    return a + b
+
+def reduce(f, id_, a):
+    """
+    Reduce a sequence a using function f with identity id_.
+    """
+    if len(a) == 0:
+        return id_
+    result = id_
+    for item in a:
+        result = f(result, item)
+    return result
 
 
 #### Divide and conquer solution
@@ -135,9 +162,8 @@ def parens_match_dc(mylist):
     Returns:
       True if parens_match_dc_helper returns (0,0); otherwise False
     """
-    # done.
     n_unmatched_left, n_unmatched_right = parens_match_dc_helper(mylist)
-    return n_unmatched_left==0 and n_unmatched_right==0
+    return n_unmatched_left == 0 and n_unmatched_right == 0
 
 def parens_match_dc_helper(mylist):
     """
@@ -148,26 +174,28 @@ def parens_match_dc_helper(mylist):
       L is the number of unmatched left parentheses. This output is used by 
       parens_match_dc to return the final True or False value
     """
-    ###TODO
     # Base cases
     if len(mylist) == 0:
-        return [0,0]
+        return (0, 0)
     elif len(mylist) == 1:
         if mylist[0] == '(':
-            return (0, 1) # one unmatched (
+            return (0, 1)  # one unmatched (
         elif mylist[0] == ')':
-            return (1, 0) # one unmatched )    
+            return (1, 0)  # one unmatched )    
         else:
             return (0, 0)
-    i,j = parens_match_dc_helper(mylist[:len(mylist)//2])
-    k,l = parens_match_dc_helper(mylist[len(mylist)//2:])
-    # Combination:
-    # Return the tuple (R,L) using some combination of the values i,j,k,l defined above.
-    # This should be done in constant time.
-    if j > k:
-        return (i, l + j - k)
-    else:
-        return (i + k - j, l)
-    ###
     
+    # Divide
+    mid = len(mylist) // 2
+    left_R, left_L = parens_match_dc_helper(mylist[:mid])
+    right_R, right_L = parens_match_dc_helper(mylist[mid:])
+    
+    # Combine
+    # The unmatched left parens from left can match with unmatched right parens from right
+    matches = min(left_L, right_R)
+    total_R = left_R + (right_R - matches)
+    total_L = (left_L - matches) + right_L
+    
+    return (total_R, total_L)
+
 
